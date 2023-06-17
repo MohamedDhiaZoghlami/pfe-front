@@ -51,7 +51,10 @@ export default function SignIn() {
     params.append("username", data.username);
     params.append("password", data.password);
     try {
-      const response = await axios.post("http://localhost:8080/login", params);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACK_CALL}/login`,
+        params
+      );
       console.log(response.data);
       const access_token = response.data.access_token;
       const refresh_token = response.data.refresh_token;
