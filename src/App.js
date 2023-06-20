@@ -18,6 +18,7 @@ import AllInOne from "./scenes/AllInOne";
 import PrivateRoute from "./utils/PrivateRoute";
 import { useContext } from "react";
 import CreateCustomer from "./scenes/team/CreateCustomer";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -26,6 +27,7 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Toaster position="top-right" reverseOrder={true} duration="3000" />
         <Routes>
           <Route
             path="/"
