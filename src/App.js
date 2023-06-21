@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
 import Dashboard from "./scenes/dashboard";
-import Team from "./scenes/team";
+import Customers from "./scenes/customers";
+import UpdateCustomer from "./scenes/customers/UpdateCustomer";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
@@ -17,8 +18,8 @@ import SignIn from "./pages/Signin/SignIn";
 import AllInOne from "./scenes/AllInOne";
 import PrivateRoute from "./utils/PrivateRoute";
 import { useContext } from "react";
-import CreateCustomer from "./scenes/team/CreateCustomer";
 import { Toaster } from "react-hot-toast";
+import CustomerDetails from "./scenes/customers/CustomerDetails";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -32,13 +33,15 @@ function App() {
           <Route
             path="/"
             element={
-              <PrivateRoute isSignedIn={!isLoggedIn}>
+              <PrivateRoute isSignedIn={isLoggedIn}>
                 <AllInOne />
               </PrivateRoute>
             }
           >
             <Route path="/" element={<Dashboard />} />
-            <Route path="team" element={<Team />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="customers/:id" element={<CustomerDetails />} />
+            <Route path="customers/update/:id" element={<UpdateCustomer />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />

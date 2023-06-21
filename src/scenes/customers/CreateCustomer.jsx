@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
@@ -7,14 +7,21 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import "./CreateCustomer.scss";
 import { toast } from "react-hot-toast";
+import AuthContext from "../../context/AuthContext";
 
 const CreateCustomer = ({ setModal }) => {
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
+  console.log(user.username);
   const handleFormSubmit = async (values) => {
     setLoading(true);
     console.log(values);
+    values = {
+      ...values,
+      created_By: user.username,
+      last_updated_By: user.username,
+    };
     try {
       const send = await axios.post(
         `${process.env.REACT_APP_BACK_CALL}/customers/create`,

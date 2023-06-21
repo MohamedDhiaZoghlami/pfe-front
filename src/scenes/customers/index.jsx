@@ -8,6 +8,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import "./pagination.scss";
+import { AiFillEye, AiOutlineSync } from "react-icons/ai";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Team = () => {
   const theme = useTheme();
@@ -25,11 +29,9 @@ const Team = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "adress",
+      headerName: "adress",
+      flex: 1,
     },
     {
       field: "phone",
@@ -40,6 +42,37 @@ const Team = () => {
       field: "email",
       headerName: "Email",
       flex: 1,
+    },
+    {
+      field: "created_By",
+      headerName: "Created by",
+      flex: 1,
+    },
+    {
+      field: "last_updated_By",
+      headerName: "last updated by",
+      flex: 1,
+    },
+    {
+      headerName: "Access Level",
+      flex: 1,
+      renderCell: (customer) => {
+        return (
+          <div className="customer-btns">
+            <Link to={`${customer.id}`}>
+              <AiFillEye className="customer-btn details" />
+            </Link>
+            <Link to={`update/${customer.id}`}>
+              <AiOutlineSync className="customer-btn update" />
+            </Link>
+
+            <RiDeleteBin6Fill
+              className="customer-btn delete"
+              onClick={() => deleteCustomer(customer.id)}
+            />
+          </div>
+        );
+      },
     },
   ];
 
@@ -57,6 +90,18 @@ const Team = () => {
       setNbrPages(response.data.totalPages);
     } catch (e) {
       console.log(e);
+    }
+  };
+  const deleteCustomer = async (id) => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACK_CALL}/customers/delete/${id}`
+      );
+
+      toast.success(response.data);
+    } catch (e) {
+      console.log(e);
+      toast.error("customer may be already deleted!");
     }
   };
   const handlePageClick = (event) => {
@@ -121,22 +166,24 @@ const Team = () => {
           </Box>
         </>
       )}
-      {!modal && (
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={nbrPages}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          containerClassName="cont_page"
-          pageLinkClassName="pageElement pageNbr"
-          nextLinkClassName="pageElement"
-          previousLinkClassName="pageElement"
-          activeLinkClassName="activePage"
-        />
-      )}
+      {!modal &&
+        (nbrPages !== 1 ? (
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={nbrPages}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+            containerClassName="cont_page"
+            pageLinkClassName="pageElement pageNbr"
+            nextLinkClassName="pageElement"
+            previousLinkClassName="pageElement"
+            activeLinkClassName="activePage"
+            disabledClassName="disableBtn"
+          />
+        ) : null)}
     </Box>
   );
 };
