@@ -20,6 +20,8 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { useContext } from "react";
 import { Toaster } from "react-hot-toast";
 import CustomerDetails from "./scenes/customers/CustomerDetails";
+import ContactDetails from "./scenes/contacts/ContactDetails";
+import UpdateContact from "./scenes/contacts/UpdateContact";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -39,10 +41,14 @@ function App() {
             }
           >
             <Route path="/" element={<Dashboard />} />
+            {/* Customers  */}
             <Route path="customers" element={<Customers />} />
             <Route path="customers/:id" element={<CustomerDetails />} />
             <Route path="customers/update/:id" element={<UpdateCustomer />} />
+            {/* Contacts  */}
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="contacts/:id" element={<ContactDetails />} />
+            <Route path="contacts/update/:id" element={<UpdateContact />} />
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />
             <Route path="/bar" element={<Bar />} />

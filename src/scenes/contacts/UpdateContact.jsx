@@ -5,34 +5,31 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import "./CreateCustomer.scss";
 import { toast } from "react-hot-toast";
 import AuthContext from "../../context/AuthContext";
 import { useParams } from "react-router-dom";
 
-const UpdateCustomer = () => {
+const UpdateContact = () => {
   let { id } = useParams();
   const { user } = useContext(AuthContext);
   const [initial, setInitial] = useState({});
   const [loading, setLoading] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  console.log(user.username);
 
   useEffect(() => {
-    getCustomer(id);
+    getContact(id);
   }, []);
-  const getCustomer = async (userId) => {
+  const getContact = async (userId) => {
     setLoading(true);
     try {
       const customer = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/customers/${userId}`
+        `${process.env.REACT_APP_BACK_CALL}/contacts/${userId}`
       );
-      console.log(customer);
+      console.log(customer.data);
       setInitial({
         ...customer.data,
       });
     } catch (e) {
-      console.log(e);
       toast.error("Something Went wrong, try again.");
     }
     setLoading(false);
@@ -46,7 +43,7 @@ const UpdateCustomer = () => {
     };
     try {
       const send = await axios.put(
-        `${process.env.REACT_APP_BACK_CALL}/customers/update/${id}`,
+        `${process.env.REACT_APP_BACK_CALL}/contacts/update/${id}`,
         values
       );
       toast.success("Customer updated successfully!!");
@@ -62,7 +59,7 @@ const UpdateCustomer = () => {
     <div className="customer_wrapper">
       <div className="customer_content">
         <Box m="20px">
-          <Header title="Update Customer" subtitle="" />
+          <Header title="Update Contact" subtitle="" />
 
           {loading ? (
             <p>loading...</p>
@@ -95,26 +92,26 @@ const UpdateCustomer = () => {
                       fullWidth
                       variant="filled"
                       type="text"
-                      label="Name"
+                      label="First Name"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.name}
-                      name="name"
-                      error={!!touched.name && !!errors.name}
-                      helperText={touched.name && errors.name}
+                      value={values.firstName}
+                      name="firstName"
+                      error={!!touched.firstName && !!errors.firstName}
+                      helperText={touched.firstName && errors.firstName}
                       sx={{ gridColumn: "span 2" }}
                     />
                     <TextField
                       fullWidth
                       variant="filled"
                       type="text"
-                      label="Adress"
+                      label="Last Name"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.adress}
-                      name="adress"
-                      error={!!touched.adress && !!errors.adress}
-                      helperText={touched.adress && errors.adress}
+                      value={values.lastName}
+                      name="lastName"
+                      error={!!touched.lastName && !!errors.lastName}
+                      helperText={touched.lastName && errors.lastName}
                       sx={{ gridColumn: "span 2" }}
                     />
                     <TextField
@@ -163,8 +160,8 @@ const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-  name: yup.string().required("required"),
-  adress: yup.string().required("required"),
+  firstName: yup.string().required("required"),
+  lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   phone: yup
     .string()
@@ -172,4 +169,4 @@ const checkoutSchema = yup.object().shape({
     .required("required"),
 });
 
-export default UpdateCustomer;
+export default UpdateContact;
