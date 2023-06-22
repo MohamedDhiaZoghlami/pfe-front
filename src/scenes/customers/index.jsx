@@ -1,5 +1,5 @@
 import { Box, useTheme, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-const Team = () => {
+const Customers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -54,7 +54,7 @@ const Team = () => {
       flex: 1,
     },
     {
-      headerName: "Access Level",
+      headerName: "Actions",
       flex: 1,
       renderCell: (customer) => {
         return (
@@ -149,6 +149,9 @@ const Team = () => {
               "& .MuiCheckbox-root": {
                 color: `${colors.greenAccent[200]} !important`,
               },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${colors.grey[100]} !important`,
+              },
             }}
           >
             <DataGrid
@@ -162,6 +165,7 @@ const Team = () => {
               rowCount={data.length}
               autoHeight={true}
               hideFooter={true}
+              components={{ Toolbar: GridToolbar }}
             />
           </Box>
         </>
@@ -188,4 +192,4 @@ const Team = () => {
   );
 };
 
-export default Team;
+export default Customers;
