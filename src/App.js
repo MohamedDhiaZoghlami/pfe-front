@@ -22,6 +22,7 @@ import { Toaster } from "react-hot-toast";
 import CustomerDetails from "./scenes/customers/CustomerDetails";
 import ContactDetails from "./scenes/contacts/ContactDetails";
 import UpdateContact from "./scenes/contacts/UpdateContact";
+import Users from "./scenes/users";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -49,6 +50,9 @@ function App() {
             <Route path="/contacts" element={<Contacts />} />
             <Route path="contacts/:id" element={<ContactDetails />} />
             <Route path="contacts/update/:id" element={<UpdateContact />} />
+            {/* Users  */}
+            <Route path="users" element={<Users />} />
+            {/* <Route path="users/:id" element={<CustomerDetails />} /> */}
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />
             <Route path="/bar" element={<Bar />} />
