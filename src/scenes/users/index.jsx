@@ -1,4 +1,8 @@
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, Button, Typography } from "@mui/material";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import KeyboardIcon from "@mui/icons-material/Keyboard";
+import CoPresentIcon from "@mui/icons-material/CoPresent";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -44,6 +48,45 @@ const Users = () => {
       flex: 1,
     },
     {
+      field: "roles",
+      headerName: "Role",
+      flex: 1,
+      renderCell: ({ row: { roles } }) => {
+        console.log(roles[0]?.name);
+        const role = roles[0]?.name.substring(
+          roles[0].name.indexOf("_") + 1,
+          roles[0].name.length
+        );
+        return (
+          <Box
+            width="70%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={
+              role === "ADMIN"
+                ? colors.greenAccent[600]
+                : role === "USER"
+                ? colors.greenAccent[700]
+                : colors.greenAccent[700]
+            }
+            borderRadius="4px"
+          >
+            {role === "ADMIN" && <AdminPanelSettingsOutlinedIcon />}
+            {role === "SECRETARY" && <SupportAgentIcon />}
+            {role === "COMMERCIAL" && <CoPresentIcon />}
+            {role === "TECH" && <KeyboardIcon />}
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {roles[0]?.name
+                .substring(roles[0].name.indexOf("_") + 1, roles[0].name.length)
+                .toLowerCase()}
+            </Typography>
+          </Box>
+        );
+      },
+    },
+    {
       headerName: "Actions",
       flex: 1,
       renderCell: (customer) => {
@@ -82,7 +125,7 @@ const Users = () => {
   const deleteCustomer = async (id) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACK_CALL}/customers/delete/${id}`
+        `${process.env.REACT_APP_BACK_CALL}/user/delete/${id}`
       );
 
       toast.success(response.data);

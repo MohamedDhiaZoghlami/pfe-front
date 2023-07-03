@@ -56,7 +56,7 @@ const CreateUser = ({ setModal }) => {
       setModal(false);
     } catch (e) {
       console.log(e);
-      toast.error("Something Went wrong, try again.");
+      toast.error(e.response.data.message);
     }
     setLoading(false);
   };
