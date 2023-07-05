@@ -84,3 +84,38 @@
     }
   }
 }
+.opp-wrapper {
+  margin: 30px;
+  padding: 15px;
+}
+.opp-container {
+  margin: 30px;
+  p {
+    font-size: 18px;
+    font-weight: 600;
+    span {
+      font-size: 16px;
+      font-weight: 300;
+    }
+  }
+}
+.btns-opp {
+  display: flex;
+  justify-content: flex-end;
+}
+.btns-opp .no,
+.btns-opp .yes {
+  font-size: 18px;
+  background-color: #3da58a;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px;
+  width: 150px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+}
+
+.btns-opp .no {
+  background-color: #af3f3b;
+}

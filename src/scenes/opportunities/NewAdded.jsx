@@ -26,15 +26,17 @@ const NewAdded = () => {
       {data?.map((e) => {
         let resultSplit = e.created_at.split("T")[0];
         return (
-          <div className="newAddedBox">
-            <h6>{e.name}</h6>
-            <div className="bottom">
-              <p>{resultSplit}</p>
-              <Link to={`${e.id}`}>
-                <AiFillEye className="customer-btn details" />
-              </Link>
+          <>
+            <div className="newAddedBox">
+              <h6>{e.name}</h6>
+              <div className="bottom">
+                <p>{resultSplit}</p>
+                <Link to={`${e.id}`}>
+                  <AiFillEye className="customer-btn details" />
+                </Link>
+              </div>
             </div>
-          </div>
+          </>
         );
       })}
     </div>
