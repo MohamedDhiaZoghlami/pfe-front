@@ -219,7 +219,7 @@ const Opportunities = () => {
             disabledClassName="disableBtn"
           />
         ) : null)}
-      {oppos.length !== 0 && <Calendar opportunities={oppos} />}
+      {oppos.length !== 0 && !modal ? <Calendar opportunities={oppos} /> : null}
     </Box>
   );
 };

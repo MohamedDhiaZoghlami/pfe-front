@@ -47,3 +47,40 @@
 .c_details {
   padding: 50px;
 }
+
+.newAdded {
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.newAddedBox {
+  margin: 15px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  h6 {
+    font-size: 16px;
+    margin: 20px 10px;
+    flex-basis: 30%;
+  }
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+    p {
+      font-weight: 800;
+      margin-left: 10px;
+    }
+    .dd {
+      font-size: 28px;
+      cursor: pointer;
+      border: 1px solid #3da58a;
+      border-radius: 50%;
+      padding: 3px;
+    }
+  }
+}

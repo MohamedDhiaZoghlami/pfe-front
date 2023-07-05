@@ -24,6 +24,7 @@ import ContactDetails from "./scenes/contacts/ContactDetails";
 import UpdateContact from "./scenes/contacts/UpdateContact";
 import Users from "./scenes/users";
 import Opportunities from "./scenes/opportunities";
+import OpportunityDetails from "./scenes/opportunities/OpportunityDetails";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -56,6 +57,7 @@ function App() {
             {/* <Route path="users/:id" element={<CustomerDetails />} /> */}
             {/* Opportunities */}
             <Route path="opportunities" element={<Opportunities />} />
+            <Route path="opportunities/:id" element={<OpportunityDetails />} />
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />
             <Route path="/bar" element={<Bar />} />

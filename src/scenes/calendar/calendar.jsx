@@ -27,7 +27,10 @@ const Calendar = ({ opportunities }) => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header
+        title="See Opportunities by date"
+        subtitle="See all the expected close dates of the opportunities"
+      />
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -37,7 +40,7 @@ const Calendar = ({ opportunities }) => {
           p="15px"
           borderRadius="4px"
         >
-          <Typography variant="h5">Events</Typography>
+          <Typography variant="h5">Opportunities</Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem
