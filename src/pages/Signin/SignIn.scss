@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
 }
 .myForm {
   display: flex;
@@ -15,6 +16,10 @@
   padding: 100px 36px;
   border-radius: 8px;
   box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+  img {
+    margin-bottom: 20px;
+    width: 250px;
+  }
 }
 
 .formLine {
@@ -27,12 +32,12 @@
     margin-bottom: 30px;
     outline: none;
     background: transparent;
-    border: 1px solid #fff;
+    border: 2px solid #3e4396;
     border-radius: 8px;
     font-weight: 400;
     font-size: 16px;
     line-height: 21px;
-    color: #fff;
+    color: #000;
   }
 
   input::placeholder {

@@ -61,6 +61,7 @@
   width: 300px;
   display: flex;
   flex-direction: column;
+  border-radius: 12px;
   h6 {
     font-size: 16px;
     margin: 20px 10px;
@@ -118,4 +119,52 @@
 
 .btns-opp .no {
   background-color: #af3f3b;
+}
+//modal
+
+.ignorewrapper {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000;
+  top: 0;
+  left: 0;
+}
+.ignorecontent {
+  border-radius: 8px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  padding-bottom: 50px;
+  align-items: center;
+  .icons {
+    align-self: flex-end;
+    cursor: pointer;
+    font-size: 28px;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  .btnss {
+    display: flex;
+    div {
+      font-size: 18px;
+      background-color: #3da58a;
+      cursor: pointer;
+      color: #fff;
+      padding: 8px;
+      width: 150px;
+      border-radius: 5px;
+      margin: 5px;
+      text-align: center;
+    }
+    .no {
+      background-color: #af3f3b;
+    }
+  }
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/logopro.jpg";
 
 const isValidEmail = (email) =>
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -71,6 +72,7 @@ export default function SignIn() {
   return (
     <div className="signIn_wrapper">
       <form className="myForm" onSubmit={handleSubmit(sendIt)}>
+        <img src={Logo} alt="logo" />
         <div className="formLine">
           <div className="input-icons">
             <input
