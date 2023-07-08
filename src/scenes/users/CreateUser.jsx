@@ -219,7 +219,20 @@ const initialValues = {
   lastName: "",
   username: "",
   phone: "",
-  password: "1234",
+  password: generateRandomPassword(),
 };
 
+function generateRandomPassword() {
+  const length = 6;
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let password = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    password += characters.charAt(randomIndex);
+  }
+
+  return password;
+}
 export default CreateUser;
