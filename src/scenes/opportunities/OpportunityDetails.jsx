@@ -6,14 +6,18 @@ import Header from "../../components/Header";
 import "./pagination.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import Select from "react-select";
+import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 
 const OpportunityDetails = () => {
   let { id } = useParams();
   const [datas, setDatas] = useState({});
   const [value, setValue] = useState("");
+  const [assign, setAssign] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showIgnore, setShowIgnore] = useState(false);
   const [showParticipate, setShowParticipate] = useState(false);
+  const [commercials, setCommercials] = useState([]);
+  const [agent, setAgent] = useState("");
   const options = [
     {
       value: "Low",
@@ -30,6 +34,7 @@ const OpportunityDetails = () => {
   ];
   useEffect(() => {
     getOpportunity(id);
+    getAllCommercialAgents();
   }, []);
   const getOpportunity = async (id) => {
     setLoading(true);
@@ -40,6 +45,26 @@ const OpportunityDetails = () => {
       setDatas({
         ...opportunity.data,
       });
+    } catch (e) {
+      toast.error("Something Went wrong, try again.");
+    }
+    setLoading(false);
+  };
+  const getAllCommercialAgents = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACK_CALL}/user/commercials`
+      );
+      console.log(response, "dq");
+      const options = response.data.map((e) => {
+        return {
+          value: e.username,
+          label: e.username,
+        };
+      });
+      console.log(options);
+      setCommercials([...options]);
     } catch (e) {
       toast.error("Something Went wrong, try again.");
     }
@@ -60,6 +85,7 @@ const OpportunityDetails = () => {
         opp
       );
       toast.success("your decision has been made.");
+      setDatas(opp);
     } catch (e) {
       console.log(e);
       toast.error("something went wrong.");
@@ -82,6 +108,8 @@ const OpportunityDetails = () => {
         opp
       );
       toast.success("your decision has been made.");
+      setDatas(opp);
+      setAssign(true);
     } catch (e) {
       console.log(e);
       toast.error("something went wrong.");
@@ -90,9 +118,30 @@ const OpportunityDetails = () => {
     setShowParticipate(false);
   };
   function handleSelectedChoix(e) {
-    setValue(e.value);
+    setAgent(e.value);
     // handle other stuff like persisting to store etc
   }
+  const assignAgent = async () => {
+    setLoading(true);
+    const opp = {
+      ...datas,
+      agent: agent,
+    };
+
+    try {
+      const result = axios.put(
+        `${process.env.REACT_APP_BACK_CALL}/opportunity/update/${id}`,
+        opp
+      );
+      toast.success("your decision has been made.");
+      setDatas(opp);
+    } catch (e) {
+      console.log(e);
+      toast.error("something went wrong.");
+    }
+    setLoading(false);
+    setAssign(false);
+  };
   if (loading) {
     return <p>loading...</p>;
   } else {
@@ -102,6 +151,11 @@ const OpportunityDetails = () => {
           title="Opportunity details"
           subtitle="Manage this opportunity"
         />
+        {datas.value !== "Not_assigned_yet" && (
+          <div className="btn-assign" onClick={() => setAssign(true)}>
+            +
+          </div>
+        )}
         {showIgnore && (
           <div className="ignorewrapper">
             <div className="ignorecontent">
@@ -116,6 +170,54 @@ const OpportunityDetails = () => {
                 </div>
                 <div className="yes" onClick={() => ignoreOpportunity()}>
                   Yes
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {assign && (
+          <div className="ignorewrapper">
+            <div className="ignorecontent">
+              <CloseIcon className="icons" onClick={() => setAssign(false)} />
+              <h2>Add a commercial agent to this opportunity</h2>
+              <Select
+                options={commercials}
+                sx={{ gridColumn: "span 2" }}
+                onChange={handleSelectedChoix}
+                styles={{
+                  control: (styles) => ({
+                    ...styles,
+                    backgroundColor: "transparent",
+                    color: "white",
+                  }),
+                  option: (
+                    styles,
+                    { data, isDisabled, isFocused, isSelected }
+                  ) => {
+                    return {
+                      ...styles,
+                      backgroundColor: "white",
+                      color: "black",
+                    };
+                  },
+                  input: (styles) => ({
+                    ...styles,
+                    color: "grey",
+                    width: "300px",
+                  }),
+                  placeholder: (styles) => ({
+                    ...styles,
+                    color: "grey",
+                  }),
+                  singleValue: (styles, { data }) => ({
+                    ...styles,
+                    color: "grey",
+                  }),
+                }}
+              />
+              <div className="btnss">
+                <div className="yes" onClick={() => assignAgent()}>
+                  Confirm
                 </div>
               </div>
             </div>

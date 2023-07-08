@@ -219,6 +219,7 @@ const initialValues = {
   fromWhere: "internal",
   value: "Not_assigned_yet",
   decision: "Not_assigned_yet",
+  agent: "",
   created_By: "dzovi",
   last_updated_By: "dzovi",
   created_at: Date.now(),
