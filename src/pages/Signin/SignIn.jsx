@@ -26,13 +26,17 @@ export default function SignIn() {
     formState: { errors },
     watch,
   } = useForm();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, roles } = useContext(AuthContext);
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/");
+      if (roles[0] === "ROLE_ADMIN") {
+        navigate("/");
+      } else if (roles[0] === "ROLE_COMMERCIAL") {
+        navigate("/commercial");
+      }
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, roles]);
   const handleChange = (e) => {
     e.preventDefault();
     setInfo({

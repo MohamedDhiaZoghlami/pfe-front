@@ -25,10 +25,14 @@ import UpdateContact from "./scenes/contacts/UpdateContact";
 import Users from "./scenes/users";
 import Opportunities from "./scenes/opportunities";
 import OpportunityDetails from "./scenes/opportunities/OpportunityDetails";
+import CommercialPrivateRoute from "./utils/CommercialPrivateRoute";
+import ComAll from "./scenes/commercial/ComAll";
+import AgentOpportunities from "./scenes/commercial/opportunities";
 
 function App() {
   const [theme, colorMode] = useMode();
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, roles } = useContext(AuthContext);
+  console.log(roles);
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -66,6 +70,16 @@ function App() {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/geography" element={<Geography />} />
+          </Route>
+          <Route
+            path="/commercial"
+            element={
+              <CommercialPrivateRoute isSignedIn={isLoggedIn} role={roles[0]}>
+                <ComAll />
+              </CommercialPrivateRoute>
+            }
+          >
+            <Route path="opportunities" element={<AgentOpportunities />} />
           </Route>
           <Route path="/login" element={<SignIn />} />
         </Routes>

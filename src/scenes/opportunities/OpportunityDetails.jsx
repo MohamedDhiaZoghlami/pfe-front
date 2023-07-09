@@ -151,7 +151,7 @@ const OpportunityDetails = () => {
           title="Opportunity details"
           subtitle="Manage this opportunity"
         />
-        {datas.value !== "Not_assigned_yet" && (
+        {datas.value !== "Not_assigned_yet" && datas.decision !== "Ignored" && (
           <div className="btn-assign" onClick={() => setAssign(true)}>
             +
           </div>
