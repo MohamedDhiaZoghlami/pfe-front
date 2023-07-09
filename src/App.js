@@ -28,6 +28,7 @@ import OpportunityDetails from "./scenes/opportunities/OpportunityDetails";
 import CommercialPrivateRoute from "./utils/CommercialPrivateRoute";
 import ComAll from "./scenes/commercial/ComAll";
 import AgentOpportunities from "./scenes/commercial/opportunities";
+import AgentOppDetails from "./scenes/commercial/opportunities/AgentOppDetails";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -80,6 +81,7 @@ function App() {
             }
           >
             <Route path="opportunities" element={<AgentOpportunities />} />
+            <Route path="opportunities/:id" element={<AgentOppDetails />} />
           </Route>
           <Route path="/login" element={<SignIn />} />
         </Routes>

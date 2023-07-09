@@ -98,7 +98,7 @@ const OpportunityDetails = () => {
     const opp = {
       ...datas,
       value: value,
-      decistion: "Participate",
+      decision: "Participate",
       stage: "Deciding",
     };
 
@@ -109,7 +109,6 @@ const OpportunityDetails = () => {
       );
       toast.success("your decision has been made.");
       setDatas(opp);
-      setAssign(true);
     } catch (e) {
       console.log(e);
       toast.error("something went wrong.");
@@ -121,11 +120,16 @@ const OpportunityDetails = () => {
     setAgent(e.value);
     // handle other stuff like persisting to store etc
   }
+  function handleSelectedChoixValue(e) {
+    setValue(e.value);
+    // handle other stuff like persisting to store etc
+  }
   const assignAgent = async () => {
     setLoading(true);
     const opp = {
       ...datas,
       agent: agent,
+      stage: "Assigned",
     };
 
     try {
@@ -237,7 +241,7 @@ const OpportunityDetails = () => {
               <Select
                 options={options}
                 sx={{ gridColumn: "span 2" }}
-                onChange={handleSelectedChoix}
+                onChange={handleSelectedChoixValue}
                 styles={{
                   control: (styles) => ({
                     ...styles,
@@ -286,6 +290,9 @@ const OpportunityDetails = () => {
             <div className="opp-container">
               <p>
                 Name : <span>{datas.name}</span>
+              </p>
+              <p>
+                Decision : <span>{datas.decision}</span>
               </p>
               <p>
                 Description : <span>{datas.description}</span>{" "}
