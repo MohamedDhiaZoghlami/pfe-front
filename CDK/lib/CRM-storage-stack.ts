@@ -4,6 +4,7 @@ import {
     RemovalPolicy,
     aws_cloudfront as cloudfront,
     aws_cloudfront_origins as origins,
+    aws_ssm as ssm
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
@@ -41,6 +42,10 @@ export class CRMStorageStack extends Stack {
                 }
             ]
         });
+        new ssm.StringParameter(this, "CRM_BucketObjectName-EXPORT", {
+            stringValue: this.objectBucket.bucketName,
+            parameterName: '/CRM/buckets/assets_bucket_name'
+        });
         this.distribution = new cloudfront.Distribution(this, `CRM-Assets-Distribution`, {
             priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
             comment: `CRM Assets Distribution`,
@@ -50,6 +55,10 @@ export class CRMStorageStack extends Stack {
                 cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
             },
             enabled: true
+        });
+        new ssm.StringParameter(this, "CRM_AssetsDistribution-EXPORT", {
+            stringValue: this.distribution.distributionDomainName,
+            parameterName: '/CRM/distributions/assets_distribution_domain_name'
         });
 
 

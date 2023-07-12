@@ -28,6 +28,11 @@ export class CRMFrontendPipelineStack extends Stack {
       { parameterName: "/CRM/buckets/assets_bucket_name" }
     ).stringValue;
 
+    const CRM_ASSETS_DISTRIBUTION_DOMAIN = ssm.StringParameter.fromStringParameterAttributes(
+      this,
+      `CRM_ASSETS_BUCKET_NAME`,
+      { parameterName: "/CRM/distributions/assets_distribution_domain_name" }
+    ).stringValue;
     const CRM_API_BACKEND = ssm.StringParameter.fromStringParameterAttributes(
       this,
       'CRM_API_BACKEND',
@@ -54,6 +59,7 @@ export class CRMFrontendPipelineStack extends Stack {
               'echo "REACT_APP_REGION=$REGION" >> .env',
               'echo "REACT_APP_CRM_API_BACKEND=$REACT_APP_CRM_API_BACKEND" >> .env',
               'echo "REACT_APP_CRM_ASSETS_BUCKET_NAME=$REACT_APP_CRM_ASSETS_BUCKET_NAME" >> .env',
+              'echo "REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN=$REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN" >> .env',
               'echo "Build started on `date`"',
               "npm run build",
               'echo "Build finished on `date`"',
@@ -71,6 +77,7 @@ export class CRMFrontendPipelineStack extends Stack {
         REACT_APP_CRM_ASSETS_BUCKET_NAME: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_ASSETS_BUCKET_NAME },
         REACT_APP_REGION: { type: BuildEnvironmentVariableType.PLAINTEXT, value: this.region },
         REACT_APP_CRM_API_BACKEND: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_API_BACKEND },
+        REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_ASSETS_DISTRIBUTION_DOMAIN },
       },
     });
 
