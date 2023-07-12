@@ -17,9 +17,16 @@ export class CRMStorageStack extends Stack {
 
         this.objectBucket = new s3.Bucket(this, "CRM-Object-Bucket", {
             accessControl: s3.BucketAccessControl.PUBLIC_READ_WRITE,
+            publicReadAccess: true,
             encryption: s3.BucketEncryption.S3_MANAGED,
             versioned: false,
             removalPolicy: RemovalPolicy.DESTROY,
+            blockPublicAccess: new s3.BlockPublicAccess({
+                blockPublicAcls: false,
+                ignorePublicAcls: false,
+                blockPublicPolicy: false,
+                restrictPublicBuckets: false,
+            }),
             autoDeleteObjects: true,
             cors: [
                 {
