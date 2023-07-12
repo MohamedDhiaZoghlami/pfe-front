@@ -30,7 +30,7 @@ export class CRMFrontendPipelineStack extends Stack {
 
     const CRM_ASSETS_DISTRIBUTION_DOMAIN = ssm.StringParameter.fromStringParameterAttributes(
       this,
-      `CRM_ASSETS_BUCKET_NAME`,
+      `CRM_ASSETS_DISTRIBUTION_DOMAIN`,
       { parameterName: "/CRM/distributions/assets_distribution_domain_name" }
     ).stringValue;
     const CRM_API_BACKEND = ssm.StringParameter.fromStringParameterAttributes(
@@ -80,6 +80,11 @@ export class CRMFrontendPipelineStack extends Stack {
         REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_ASSETS_DISTRIBUTION_DOMAIN },
       },
     });
+    const githubToken = ssm.StringParameter.fromStringParameterAttributes(
+      this,
+      `CRM_Github_Token`,
+      { parameterName: "/CRM/github/accessToken" }
+    ).stringValue;
 
     new codepipeline.Pipeline(this, "mhm-Motors-Frontend-pipeline", {
       crossAccountKeys: false,
@@ -87,7 +92,7 @@ export class CRMFrontendPipelineStack extends Stack {
       stages: [
         {
           stageName: "source",
-          actions: [new CodeSourceStage(this, "sourceStage").action]
+          actions: [new CodeSourceStage(this, "sourceStage", { githubToken }).action]
         },
         {
           stageName: "build",
