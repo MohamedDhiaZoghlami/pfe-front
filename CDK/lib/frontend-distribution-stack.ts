@@ -27,12 +27,16 @@ export class WebsiteDistributionStack extends Stack {
             removalPolicy: RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
         });
+        const oin = new cloudfront.OriginAccessIdentity(this, 'CRM-Website-origin-access-identity', {
+            comment: "Origin identity for CRM Website"
+        });
 
+        this.websiteBucket.grantRead(oin);
         const distribution = new cloudfront.Distribution(this, `CRM-website-Distribution`, {
             priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
             comment: `CRM Website Distribution`,
             defaultBehavior: {
-                origin: new origins.S3Origin(this.websiteBucket),
+                origin: new origins.S3Origin(this.websiteBucket, { originAccessIdentity: oin }),
                 viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
                 cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
             },

@@ -22,16 +22,6 @@ export class CRMStorageStack extends Stack {
             encryption: s3.BucketEncryption.S3_MANAGED,
             versioned: false,
             removalPolicy: RemovalPolicy.DESTROY,
-
-            // objectOwnership: s3.ObjectOwnership.OBJECT_WRITER,
-            // blockPublicAccess: new s3.BlockPublicAccess(
-            //     {
-            //         blockPublicAcls: false,
-            //         blockPublicPolicy: false,
-            //         ignorePublicAcls: false,
-            //         restrictPublicBuckets: false
-            //     }
-            // ),
             autoDeleteObjects: true,
             cors: [
                 {
