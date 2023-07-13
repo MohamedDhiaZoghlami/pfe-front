@@ -17,21 +17,15 @@ export class WebsiteDistributionStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
         this.websiteBucket = new s3.Bucket(this, "websiteBucket", {
-            bucketName: `frontend-crm-website`,
-            accessControl: s3.BucketAccessControl.PUBLIC_READ_WRITE,
-            publicReadAccess: true,
+            bucketName: `crm-frontend-website`,
+            accessControl: s3.BucketAccessControl.PRIVATE,
+            publicReadAccess: false,
             encryption: s3.BucketEncryption.S3_MANAGED,
             versioned: false,
             websiteIndexDocument: "index.html",
             websiteErrorDocument: "index.html",
             removalPolicy: RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
-            blockPublicAccess: new s3.BlockPublicAccess({
-                blockPublicAcls: false,
-                ignorePublicAcls: false,
-                blockPublicPolicy: false,
-                restrictPublicBuckets: false,
-            }),
         });
 
         const distribution = new cloudfront.Distribution(this, `CRM-website-Distribution`, {
@@ -46,9 +40,6 @@ export class WebsiteDistributionStack extends Stack {
         });
 
 
-        new CfnOutput(this, "distribution-CRM-frontend", {
-            value: distribution.distributionDomainName,
-        });
 
     }
 

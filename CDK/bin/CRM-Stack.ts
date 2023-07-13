@@ -9,6 +9,8 @@ const app = new cdk.App();
 
 new CRMStorageStack(app, "CRM-storage-stack");
 
-new WebsiteDistributionStack(app, "CRM-WebsiteDistribution-Stack");
+const websiteDistribution = new WebsiteDistributionStack(app, "CRM-WebsiteDistribution-Stack");
 
-new CRMFrontendPipelineStack(app, "CRM-Frontend-Pipeline-Stack");
+new CRMFrontendPipelineStack(app, "CRM-Frontend-Pipeline-Stack", {
+    websiteBucket: websiteDistribution.websiteBucket
+});

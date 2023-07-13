@@ -12,14 +12,14 @@ import { IBucket } from 'aws-cdk-lib/aws-s3';
 import { CodeSourceStage } from './stages/frontend-codeSource-stage';
 import { BuildStage } from './stages/frontend-build-stage';
 import { DeployStage } from './stages/frontend-deploy-stage';
-import { WebsiteDistributionStack } from './frontend-distribution-stack';
 import { BuildEnvironmentVariableType, Cache, LocalCacheMode } from 'aws-cdk-lib/aws-codebuild';
 
 
-
+interface CRMFrontendPipelineStackProps extends StackProps {
+  websiteBucket: IBucket;
+}
 export class CRMFrontendPipelineStack extends Stack {
-  public readonly websiteBucket: IBucket;
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: CRMFrontendPipelineStackProps) {
     super(scope, id, props);
 
     const CRM_ASSETS_BUCKET_NAME = ssm.StringParameter.fromStringParameterAttributes(
@@ -33,11 +33,11 @@ export class CRMFrontendPipelineStack extends Stack {
       `CRM_ASSETS_DISTRIBUTION_DOMAIN`,
       { parameterName: "/CRM/distributions/assets_distribution_domain_name" }
     ).stringValue;
-    const CRM_API_BACKEND = ssm.StringParameter.fromStringParameterAttributes(
-      this,
-      'CRM_API_BACKEND',
-      { parameterName: "/CRM/backend/api_url" }
-    ).stringValue
+    // const CRM_API_BACKEND = ssm.StringParameter.fromStringParameterAttributes(
+    //   this,
+    //   'CRM_API_BACKEND',
+    //   { parameterName: "/CRM/backend/api_url" }
+    // ).stringValue
 
     const codeBuildProject = new codebuild.PipelineProject(this, "CodeBuildProject", {
       projectName: `CRM_BUILD_PROJECT`,
@@ -50,14 +50,14 @@ export class CRMFrontendPipelineStack extends Stack {
         version: 0.2,
         phases: {
           install: {
-            "runtime-versions": { nodejs: 16 },
-            commands: ["n 16.14.0", "cd CRM", "npm install --legacy-peer-deps"],
+            "runtime-versions": { nodejs: 18 },
+            commands: ["cd CRM", "npm install --legacy-peer-deps"],
           },
           build: {
             commands: [
               'echo "pass envirement variables on `date`"',
               'echo "REACT_APP_REGION=$REGION" >> .env',
-              'echo "REACT_APP_CRM_API_BACKEND=$REACT_APP_CRM_API_BACKEND" >> .env',
+              // 'echo "REACT_APP_CRM_API_BACKEND=$REACT_APP_CRM_API_BACKEND" >> .env',
               'echo "REACT_APP_CRM_ASSETS_BUCKET_NAME=$REACT_APP_CRM_ASSETS_BUCKET_NAME" >> .env',
               'echo "REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN=$REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN" >> .env',
               'echo "Build started on `date`"',
@@ -76,7 +76,7 @@ export class CRMFrontendPipelineStack extends Stack {
       environmentVariables: {
         REACT_APP_CRM_ASSETS_BUCKET_NAME: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_ASSETS_BUCKET_NAME },
         REACT_APP_REGION: { type: BuildEnvironmentVariableType.PLAINTEXT, value: this.region },
-        REACT_APP_CRM_API_BACKEND: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_API_BACKEND },
+        // REACT_APP_CRM_API_BACKEND: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_API_BACKEND },
         REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN: { type: BuildEnvironmentVariableType.PLAINTEXT, value: CRM_ASSETS_DISTRIBUTION_DOMAIN },
       },
     });
@@ -86,7 +86,7 @@ export class CRMFrontendPipelineStack extends Stack {
       { parameterName: "/CRM/github/accessToken" }
     ).stringValue;
 
-    new codepipeline.Pipeline(this, "mhm-Motors-Frontend-pipeline", {
+    new codepipeline.Pipeline(this, "CRM-Frontend-pipeline", {
       crossAccountKeys: false,
       pipelineName: `CRM_FRONTEND_PIPELINE`,
       stages: [
@@ -105,7 +105,7 @@ export class CRMFrontendPipelineStack extends Stack {
           stageName: "deploy",
           actions: [
             new DeployStage(this, "deployStage", {
-              websiteBucket: new WebsiteDistributionStack(this, 'website-distribution-stack').websiteBucket
+              websiteBucket: props.websiteBucket
             }).action
           ]
         }

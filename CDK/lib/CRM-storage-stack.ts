@@ -16,17 +16,22 @@ export class CRMStorageStack extends Stack {
         super(scope, id, props);
 
         this.objectBucket = new s3.Bucket(this, "CRM-Object-Bucket", {
-            accessControl: s3.BucketAccessControl.PUBLIC_READ_WRITE,
-            publicReadAccess: true,
+            bucketName: "crm-object-bucket",
+            accessControl: s3.BucketAccessControl.PRIVATE,
+            publicReadAccess: false,
             encryption: s3.BucketEncryption.S3_MANAGED,
             versioned: false,
             removalPolicy: RemovalPolicy.DESTROY,
-            blockPublicAccess: new s3.BlockPublicAccess({
-                blockPublicAcls: false,
-                ignorePublicAcls: false,
-                blockPublicPolicy: false,
-                restrictPublicBuckets: false,
-            }),
+
+            // objectOwnership: s3.ObjectOwnership.OBJECT_WRITER,
+            // blockPublicAccess: new s3.BlockPublicAccess(
+            //     {
+            //         blockPublicAcls: false,
+            //         blockPublicPolicy: false,
+            //         ignorePublicAcls: false,
+            //         restrictPublicBuckets: false
+            //     }
+            // ),
             autoDeleteObjects: true,
             cors: [
                 {
@@ -53,13 +58,19 @@ export class CRMStorageStack extends Stack {
             stringValue: this.objectBucket.bucketName,
             parameterName: '/CRM/buckets/assets_bucket_name'
         });
+
+        const oin = new cloudfront.OriginAccessIdentity(this, 'CRM-Storage-origin-access-identity');
+
+        this.objectBucket.grantReadWrite(oin);
+
         this.distribution = new cloudfront.Distribution(this, `CRM-Assets-Distribution`, {
             priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
             comment: `CRM Assets Distribution`,
             defaultBehavior: {
-                origin: new origins.S3Origin(this.objectBucket),
+                origin: new origins.S3Origin(this.objectBucket, { originAccessIdentity: oin }),
                 viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
                 cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+                allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
             },
             enabled: true
         });
