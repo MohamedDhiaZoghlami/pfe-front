@@ -1,0 +1,238 @@
+digraph "Diagram" {
+  splines = "ortho";
+  pad = "1.0";
+  nodesep = "0.60";
+  ranksep = "0.75";
+  fontname = "Sans-Serif";
+  fontsize = "15";
+  dpi = "200";
+  rankdir = "BT";
+  compound = "true";
+  fontcolor = "#222222";
+  edge [
+    color = "#D5871488",
+    penwidth = 2,
+    arrowhead = "dot",
+    arrowtail = "dot",
+  ];
+  node [
+    shape = "box",
+    style = "rounded",
+    fixedsize = true,
+    width = 1.7,
+    height = 1.7,
+    labelloc = "c",
+    imagescale = true,
+    fontname = "Sans-Serif",
+    fontsize = 8,
+    margin = 8,
+  ];
+  subgraph "App" {
+    subgraph "cluster-SubGraph.App" {
+      graph [
+        label = "App",
+        labelloc = "b",
+        labeljust = "l",
+        margin = "10",
+        fontsize = "16",
+        penwidth = "2",
+        pencolor = "#888888",
+        style = "filled,rounded",
+        fillcolor = "#f3f3f3",
+      ];
+      subgraph "cluster-SubGraph.CRM-storage-stack" {
+        graph [
+          label = "CRM-storage-stack",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "CRM-storage-stack/CRM-Object-Bucket" [
+          label = " CRM-Object-Bucket",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "CRM-storage-stack/CRM_BucketObjectName-EXPORT" [
+          label = " CRM BucketObjectName\nEXPORT",
+          fontsize = 12,
+        ];
+        "CRM-storage-stack/CRM-Storage-origin-access-identity" [
+          label = " CRM Storage origin\naccess identity",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Resource/Res_Security-Identity-and-Compliance/Res_48_Dark/Res_AWS-Identity-Access-Management_Permissions_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        "CRM-storage-stack/CRM-Assets-Distribution" [
+          label = " CRM Assets\nDistribution",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        "CRM-storage-stack/CRM_AssetsDistribution-EXPORT" [
+          label = " CRM\nAssetsDistribution\nEXPORT",
+          fontsize = 12,
+        ];
+      }
+      subgraph "cluster-SubGraph.CRM-WebsiteDistribution-Stack" {
+        graph [
+          label = "CRM-WebsiteDistribution-Stack",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "CRM-WebsiteDistribution-Stack/websiteBucket" [
+          label = " websiteBucket",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "CRM-WebsiteDistribution-Stack/CRM-Website-origin-access-identity" [
+          label = " CRM Website origin\naccess identity",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Resource/Res_Security-Identity-and-Compliance/Res_48_Dark/Res_AWS-Identity-Access-Management_Permissions_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        "CRM-WebsiteDistribution-Stack/CRM-website-Distribution" [
+          label = " CRM website\nDistribution",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+      }
+      subgraph "cluster-SubGraph.CRM-Frontend-Pipeline-Stack" {
+        graph [
+          label = "CRM-Frontend-Pipeline-Stack",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "CRM-Frontend-Pipeline-Stack/CodeBuildProject" [
+          label = " CodeBuildProject",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Service/Arch_Developer- Tools/64/Arch_Amazon-CodeBuild_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "CRM-Frontend-Pipeline-Stack/sourceStage" [
+          label = " sourceStage",
+          fontsize = 12,
+        ];
+        "CRM-Frontend-Pipeline-Stack/buildStage" [
+          label = " buildStage",
+          fontsize = 12,
+        ];
+        "CRM-Frontend-Pipeline-Stack/deployStage" [
+          label = " deployStage",
+          fontsize = 12,
+        ];
+        "CRM-Frontend-Pipeline-Stack/CRM-Frontend-pipeline" [
+          label = "\nCRM-Frontend-pipeline",
+          fontsize = 12,
+          image = "/usr/local/lib/node_modules/cdk-dia/icons/aws/Service/Arch_Developer- Tools/64/Arch_AWS-CodePipeline_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.682,
+        ];
+      }
+    }
+  }
+  "CRM-storage-stack/CRM-Object-Bucket" -> "CRM-storage-stack/CRM-Storage-origin-access-identity" [
+    dir = "both",
+  ];
+  "CRM-storage-stack/CRM_BucketObjectName-EXPORT" -> "CRM-storage-stack/CRM-Object-Bucket" [
+    dir = "both",
+  ];
+  "CRM-storage-stack/CRM-Assets-Distribution" -> "CRM-storage-stack/CRM-Object-Bucket" [
+    dir = "both",
+  ];
+  "CRM-storage-stack/CRM-Assets-Distribution" -> "CRM-storage-stack/CRM-Storage-origin-access-identity" [
+    dir = "both",
+  ];
+  "CRM-storage-stack/CRM_AssetsDistribution-EXPORT" -> "CRM-storage-stack/CRM-Assets-Distribution" [
+    dir = "both",
+  ];
+  "CRM-WebsiteDistribution-Stack/websiteBucket" -> "CRM-WebsiteDistribution-Stack/CRM-Website-origin-access-identity" [
+    dir = "both",
+  ];
+  "CRM-WebsiteDistribution-Stack/CRM-website-Distribution" -> "CRM-WebsiteDistribution-Stack/websiteBucket" [
+    dir = "both",
+  ];
+  "CRM-Frontend-Pipeline-Stack/CodeBuildProject" -> "CRM-Frontend-Pipeline-Stack/CRM-Frontend-pipeline" [
+    dir = "both",
+  ];
+  "CRM-Frontend-Pipeline-Stack/CRM-Frontend-pipeline" -> "CRM-WebsiteDistribution-Stack/websiteBucket" [
+    dir = "both",
+  ];
+  "CRM-Frontend-Pipeline-Stack/CRM-Frontend-pipeline" -> "CRM-Frontend-Pipeline-Stack/CodeBuildProject" [
+    dir = "both",
+  ];
+}
