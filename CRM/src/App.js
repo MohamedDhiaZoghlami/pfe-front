@@ -29,6 +29,8 @@ import CommercialPrivateRoute from "./utils/CommercialPrivateRoute";
 import ComAll from "./scenes/commercial/ComAll";
 import AgentOpportunities from "./scenes/commercial/opportunities";
 import AgentOppDetails from "./scenes/commercial/opportunities/AgentOppDetails";
+import SecretaryAll from "./scenes/secretary/SecretaryAll";
+import SecretaryPrivateRoute from "./utils/SecretaryPrivateRoute";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -82,6 +84,26 @@ function App() {
           >
             <Route path="opportunities" element={<AgentOpportunities />} />
             <Route path="opportunities/:id" element={<AgentOppDetails />} />
+          </Route>
+          <Route
+            path="/secretary"
+            element={
+              <SecretaryPrivateRoute isSignedIn={isLoggedIn} role={roles[0]}>
+                <SecretaryAll />
+              </SecretaryPrivateRoute>
+            }
+          >
+            {/* Customers  */}
+            <Route path="customers" element={<Customers />} />
+            <Route path="customers/:id" element={<CustomerDetails />} />
+            <Route path="customers/update/:id" element={<UpdateCustomer />} />
+            {/* Contacts  */}
+            <Route path="contacts" element={<Contacts />} />
+            <Route path="contacts/:id" element={<ContactDetails />} />
+            <Route path="contacts/update/:id" element={<UpdateContact />} />
+            {/* Opportunities */}
+            <Route path="opportunities" element={<Opportunities />} />
+            <Route path="opportunities/:id" element={<OpportunityDetails />} />
           </Route>
           <Route path="/login" element={<SignIn />} />
         </Routes>

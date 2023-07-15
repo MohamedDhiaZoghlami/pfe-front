@@ -14,8 +14,11 @@ import { Link } from "react-router-dom";
 import NewAdded from "./NewAdded";
 import CreateOpportunity from "./CreateOpportunity";
 import Calendar from "../calendar/calendar";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 const Opportunities = () => {
+  const { roles } = useContext(AuthContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -151,8 +154,12 @@ const Opportunities = () => {
         <CreateOpportunity />
       ) : (
         <>
-          <h2>Newly Added :</h2>
-          <NewAdded />
+          {roles[0] === "ROLE_ADMIN" && (
+            <>
+              <h2>Newly Added :</h2>
+              <NewAdded />
+            </>
+          )}
           <Box
             m="40px 0 0 0"
             // height="75vh"
@@ -219,7 +226,13 @@ const Opportunities = () => {
             disabledClassName="disableBtn"
           />
         ) : null)}
-      {oppos.length !== 0 && !modal ? <Calendar opportunities={oppos} /> : null}
+      {roles[0] === "ROLE_ADMIN" && (
+        <>
+          {oppos.length !== 0 && !modal ? (
+            <Calendar opportunities={oppos} />
+          ) : null}
+        </>
+      )}
     </Box>
   );
 };

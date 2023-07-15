@@ -7,11 +7,15 @@ import "./pagination.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import Select from "react-select";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 const OpportunityDetails = () => {
+  const { roles } = useContext(AuthContext);
   let { id } = useParams();
   const [datas, setDatas] = useState({});
   const [value, setValue] = useState("");
+  const [files, setFiles] = useState([]);
   const [assign, setAssign] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showIgnore, setShowIgnore] = useState(false);
@@ -45,6 +49,8 @@ const OpportunityDetails = () => {
       setDatas({
         ...opportunity.data,
       });
+      const filess = opportunity.data.file.split("*");
+      setFiles(...files, filess);
     } catch (e) {
       toast.error("Something Went wrong, try again.");
     }
@@ -155,10 +161,15 @@ const OpportunityDetails = () => {
           title="Opportunity details"
           subtitle="Manage this opportunity"
         />
-        {datas.value !== "Not_assigned_yet" && datas.decision !== "Ignored" && (
-          <div className="btn-assign" onClick={() => setAssign(true)}>
-            +
-          </div>
+        {roles[0] === "ROLE_ADMIN" && (
+          <>
+            {datas.value !== "Not_assigned_yet" &&
+              datas.decision !== "Ignored" && (
+                <div className="btn-assign" onClick={() => setAssign(true)}>
+                  +
+                </div>
+              )}
+          </>
         )}
         {showIgnore && (
           <div className="ignorewrapper">
@@ -322,17 +333,36 @@ const OpportunityDetails = () => {
                 <span>{datas.last_updated_By}</span> at :{" "}
                 <span>{datas.last_updated_at.split("T")[0]}</span>
               </p>
+              <p>Documents :</p>
+              {files?.map((e, i) => {
+                if (i === 0) {
+                  return;
+                } else {
+                  return (
+                    <a
+                      href={`${process.env.REACT_APP_S3}/opp${datas.name}_${e}`}
+                      key={i}
+                    >
+                      {e}
+                    </a>
+                  );
+                }
+              })}
             </div>
           )}
-        {datas.value === "Not_assigned_yet" && (
-          <div className="btns-opp">
-            <div className="no" onClick={() => setShowIgnore(true)}>
-              Ignore
-            </div>
-            <div className="yes" onClick={() => setShowParticipate(true)}>
-              Participate
-            </div>
-          </div>
+        {roles[0] === "ROLE_ADMIN" && (
+          <>
+            {datas.value === "Not_assigned_yet" && (
+              <div className="btns-opp">
+                <div className="no" onClick={() => setShowIgnore(true)}>
+                  Ignore
+                </div>
+                <div className="yes" onClick={() => setShowParticipate(true)}>
+                  Participate
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     );

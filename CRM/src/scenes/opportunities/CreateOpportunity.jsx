@@ -10,19 +10,33 @@ import AuthContext from "../../context/AuthContext";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Input } from "@mui/material";
 import Select from "react-select";
 
 const CreateOpportunity = ({ setModal }) => {
   const { user } = useContext(AuthContext);
+  const [nbrFiles, setNbrFiles] = useState([]);
+  const [fileNames, setFileNames] = useState([]);
   const [loading, setLoading] = useState(false);
   const [customerId, setCustomerId] = useState("");
   const [customers, setCustomers] = useState([]);
   const [date, setDate] = useState("");
+  const [files, setFiles] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  console.log(user.username);
   useEffect(() => {
     getAllCustomers();
   }, []);
+  useEffect(() => {
+    console.log(files);
+  }, [nbrFiles]);
+
+  const handleNbrFiles = () => {
+    setNbrFiles([...nbrFiles, "s"]);
+  };
+
+  const handleFileChange = (e) => {
+    setFiles([...files, e.target.files]);
+  };
   const getAllCustomers = async () => {
     const response = await axios.get(
       `${process.env.REACT_APP_BACK_CALL}/customers/Once`
@@ -51,6 +65,26 @@ const CreateOpportunity = ({ setModal }) => {
       expected_close_date: date,
     };
     try {
+      for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
+        formData.append("file", files[i][0]);
+        try {
+          const response = await axios.put(
+            `${process.env.REACT_APP_S3}/opp${values.name}_${files[i][0].name}`,
+            files[i][0],
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(response);
+          setFileNames([...fileNames, `${files[i][0].name}`]);
+          values.file += `*${files[i][0].name}`;
+        } catch (e) {
+          console.log(e);
+        }
+      }
       const send = await axios.post(
         `${process.env.REACT_APP_BACK_CALL}/opportunity/create/${customerId}`,
         values
@@ -186,6 +220,18 @@ const CreateOpportunity = ({ setModal }) => {
                         onChange={(newValue) => setDate(newValue)}
                       />
                     </LocalizationProvider>
+                  </Box>
+                  <Box>
+                    {nbrFiles?.map((e, index) => (
+                      <input
+                        type="file"
+                        key={index}
+                        onChange={(e) => handleFileChange(e)}
+                      />
+                    ))}
+                  </Box>
+                  <Box>
+                    <div onClick={() => handleNbrFiles()}>add file</div>
                   </Box>
                   <Box display="flex" justifyContent="end" mt="20px">
                     <Button type="submit" color="secondary" variant="contained">

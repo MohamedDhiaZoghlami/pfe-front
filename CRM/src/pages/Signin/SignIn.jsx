@@ -34,6 +34,8 @@ export default function SignIn() {
         navigate("/");
       } else if (roles[0] === "ROLE_COMMERCIAL") {
         navigate("/commercial");
+      } else if (roles[0] === "ROLE_SECRETARY") {
+        navigate("/secretary");
       }
     }
   }, [isLoggedIn, roles]);
