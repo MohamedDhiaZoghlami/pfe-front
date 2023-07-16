@@ -187,6 +187,7 @@ const CreateOpportunity = ({ setModal }) => {
                             ...styles,
                             backgroundColor: "transparent",
                             color: "white",
+                            zIndex: "10000000",
                           }),
                           option: (
                             styles,
@@ -196,16 +197,19 @@ const CreateOpportunity = ({ setModal }) => {
                               ...styles,
                               backgroundColor: "white",
                               color: "black",
+                              zIndex: "10000000",
                             };
                           },
                           input: (styles) => ({ ...styles, color: "grey" }),
                           placeholder: (styles) => ({
                             ...styles,
                             color: "grey",
+                            zIndex: "10000000",
                           }),
                           singleValue: (styles, { data }) => ({
                             ...styles,
                             color: "grey",
+                            zIndex: "10000000",
                           }),
                         }}
                       />
@@ -221,17 +225,20 @@ const CreateOpportunity = ({ setModal }) => {
                       />
                     </LocalizationProvider>
                   </Box>
-                  <Box>
+                  <Box className="files-upp">
                     {nbrFiles?.map((e, index) => (
                       <input
                         type="file"
                         key={index}
                         onChange={(e) => handleFileChange(e)}
+                        className="custom-file-input"
                       />
                     ))}
                   </Box>
                   <Box>
-                    <div onClick={() => handleNbrFiles()}>add file</div>
+                    <div onClick={() => handleNbrFiles()} className="btnFile">
+                      add file
+                    </div>
                   </Box>
                   <Box display="flex" justifyContent="end" mt="20px">
                     <Button type="submit" color="secondary" variant="contained">

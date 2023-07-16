@@ -9,6 +9,7 @@ import Select from "react-select";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import ArticleIcon from "@mui/icons-material/Article";
 
 const OpportunityDetails = () => {
   const { roles } = useContext(AuthContext);
@@ -334,20 +335,24 @@ const OpportunityDetails = () => {
                 <span>{datas.last_updated_at.split("T")[0]}</span>
               </p>
               <p>Documents :</p>
-              {files?.map((e, i) => {
-                if (i === 0) {
-                  return;
-                } else {
-                  return (
-                    <a
-                      href={`${process.env.REACT_APP_S3}/opp${datas.name}_${e}`}
-                      key={i}
-                    >
-                      {e}
-                    </a>
-                  );
-                }
-              })}
+              <div className="fileContainer">
+                {files?.map((e, i) => {
+                  if (i === 0) {
+                    return;
+                  } else {
+                    return (
+                      <a
+                        href={`${process.env.REACT_APP_S3}/opp${datas.name}_${e}`}
+                        key={i}
+                        className="fileDownload"
+                      >
+                        <ArticleIcon className="fileIcon" />
+                        {e}
+                      </a>
+                    );
+                  }
+                })}
+              </div>
             </div>
           )}
         {roles[0] === "ROLE_ADMIN" && (
