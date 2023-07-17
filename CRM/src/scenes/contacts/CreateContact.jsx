@@ -21,7 +21,7 @@ const CreateContact = ({ setModal }) => {
   }, []);
   const getAllCustomers = async () => {
     const response = await axios.get(
-      `${process.env.REACT_APP_BACK_CALL}/customers/Once`
+      `${process.env.REACT_APP_CRM_API_BACKEND}/customers/Once`
     );
 
     const options = response.data.map((e) => {
@@ -47,7 +47,7 @@ const CreateContact = ({ setModal }) => {
     console.log(values);
     try {
       const send = await axios.post(
-        `${process.env.REACT_APP_BACK_CALL}/contacts/create/${customerId}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/contacts/create/${customerId}`,
         values
       );
       toast.success("Contact added successfully!!");

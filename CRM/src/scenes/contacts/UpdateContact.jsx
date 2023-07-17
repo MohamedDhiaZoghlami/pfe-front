@@ -23,7 +23,7 @@ const UpdateContact = () => {
     setLoading(true);
     try {
       const customer = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/contacts/${userId}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/contacts/${userId}`
       );
       console.log(customer.data);
       setInitial({
@@ -43,7 +43,7 @@ const UpdateContact = () => {
     };
     try {
       const send = await axios.put(
-        `${process.env.REACT_APP_BACK_CALL}/contacts/update/${id}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/contacts/update/${id}`,
         values
       );
       toast.success("Customer updated successfully!!");

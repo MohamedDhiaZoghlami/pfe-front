@@ -39,7 +39,7 @@ const CreateOpportunity = ({ setModal }) => {
   };
   const getAllCustomers = async () => {
     const response = await axios.get(
-      `${process.env.REACT_APP_BACK_CALL}/customers/Once`
+      `${process.env.REACT_APP_CRM_API_BACKEND}/customers/Once`
     );
 
     const options = response.data.map((e) => {
@@ -70,7 +70,7 @@ const CreateOpportunity = ({ setModal }) => {
         formData.append("file", files[i][0]);
         try {
           const response = await axios.put(
-            `${process.env.REACT_APP_S3}/opp${values.name}_${files[i][0].name}`,
+            `${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/opp${values.name}_${files[i][0].name}`,
             files[i][0],
             {
               headers: {
@@ -86,7 +86,7 @@ const CreateOpportunity = ({ setModal }) => {
         }
       }
       const send = await axios.post(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/create/${customerId}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/create/${customerId}`,
         values
       );
       toast.success("Opportunity addes successfully!!");

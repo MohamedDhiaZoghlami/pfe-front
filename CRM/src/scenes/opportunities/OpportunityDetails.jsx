@@ -45,7 +45,7 @@ const OpportunityDetails = () => {
     setLoading(true);
     try {
       const opportunity = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/${id}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/${id}`
       );
       setDatas({
         ...opportunity.data,
@@ -61,7 +61,7 @@ const OpportunityDetails = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/user/commercials`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/user/commercials`
       );
       console.log(response, "dq");
       const options = response.data.map((e) => {
@@ -88,7 +88,7 @@ const OpportunityDetails = () => {
 
     try {
       const result = axios.put(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/update/${id}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/update/${id}`,
         opp
       );
       toast.success("your decision has been made.");
@@ -111,7 +111,7 @@ const OpportunityDetails = () => {
 
     try {
       const result = axios.put(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/update/${id}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/update/${id}`,
         opp
       );
       toast.success("your decision has been made.");
@@ -141,7 +141,7 @@ const OpportunityDetails = () => {
 
     try {
       const result = axios.put(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/update/${id}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/update/${id}`,
         opp
       );
       toast.success("your decision has been made.");
@@ -342,7 +342,7 @@ const OpportunityDetails = () => {
                   } else {
                     return (
                       <a
-                        href={`${process.env.REACT_APP_S3}/opp${datas.name}_${e}`}
+                        href={`${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/opp${datas.name}_${e}`}
                         key={i}
                         className="fileDownload"
                       >

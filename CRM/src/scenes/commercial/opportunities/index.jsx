@@ -66,7 +66,7 @@ const AgentOpportunities = () => {
   const fetchOpportunities = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/agent/${username}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/agent/${username}`
       );
       console.log(response);
       setData([...response.data]);

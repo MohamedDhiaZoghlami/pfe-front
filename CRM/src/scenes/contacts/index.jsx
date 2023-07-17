@@ -83,7 +83,7 @@ const Contacts = () => {
   const fetchContacts = async (page) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/contacts/all?page=${page}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/contacts/all?page=${page}`
       );
       console.log(response);
       setData(response.data.content);
@@ -95,7 +95,7 @@ const Contacts = () => {
   const deleteContact = async (id) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACK_CALL}/contacts/delete/${id}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/contacts/delete/${id}`
       );
 
       toast.success(response.data);

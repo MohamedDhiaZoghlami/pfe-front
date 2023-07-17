@@ -16,7 +16,7 @@ const AgentOppDetails = () => {
     setLoading(true);
     try {
       const opportunity = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/${id}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/${id}`
       );
       setDatas({
         ...opportunity.data,
@@ -34,7 +34,7 @@ const AgentOppDetails = () => {
     };
     try {
       const opportunity = await axios.put(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/update/${id}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/update/${id}`,
         opp
       );
       setDatas({

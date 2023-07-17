@@ -24,7 +24,7 @@ const CreateCustomer = ({ setModal }) => {
     };
     try {
       const send = await axios.post(
-        `${process.env.REACT_APP_BACK_CALL}/customers/create`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/customers/create`,
         values
       );
       toast.success("Customer addes successfully!!");

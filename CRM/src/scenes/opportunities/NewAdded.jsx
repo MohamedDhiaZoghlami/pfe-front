@@ -13,7 +13,7 @@ const NewAdded = () => {
   const fetchOpportunities = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/recentlyAdded`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/recentlyAdded`
       );
       console.log(response);
       setData(response.data);

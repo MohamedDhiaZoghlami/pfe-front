@@ -15,7 +15,7 @@ const CustomerDetails = () => {
     setLoading(true);
     try {
       const customer = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/customers/${userId}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/customers/${userId}`
       );
       console.log(customer);
       setData({

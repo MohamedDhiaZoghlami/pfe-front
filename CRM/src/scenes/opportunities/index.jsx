@@ -165,7 +165,7 @@ const Opportunities = () => {
   const fetchOpportunities = async (page) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/all?page=${page}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/all?page=${page}`
       );
       console.log(response);
       setData(response.data.content);
@@ -177,7 +177,7 @@ const Opportunities = () => {
   const fetchAllOpportunities = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/once`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/once`
       );
       console.log(response, "dzovi");
       let dzovi = response.data.map((e, i) => {
@@ -197,7 +197,7 @@ const Opportunities = () => {
   const deleteOpportunity = async (id) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACK_CALL}/opportunity/delete/${id}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/delete/${id}`
       );
 
       toast.success(response.data);

@@ -24,9 +24,12 @@ export const AuthProvider = ({ children }) => {
     const decodedJWT = jwt_decode(token);
 
     setUsername(decodedJWT.sub);
-    const response = await axios.post("http://localhost:8080/user/getUser", {
-      username,
-    });
+    const response = await axios.post(
+      `${process.env.REACT_APP_CRM_API_BACKEND}/user/getUser`,
+      {
+        username,
+      }
+    );
     setUser(response.data);
     const rr = response.data.roles.map((e) => e.name);
     setRoles([...roles, ...rr]);
