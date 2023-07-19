@@ -4,10 +4,12 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import Header from "../../../components/Header";
 import "./pagination.scss";
+import ArticleIcon from "@mui/icons-material/Article";
 
 const AgentOppDetails = () => {
   let { id } = useParams();
   const [datas, setDatas] = useState({});
+  const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     getOpportunity(id);
@@ -21,6 +23,8 @@ const AgentOppDetails = () => {
       setDatas({
         ...opportunity.data,
       });
+      const filess = opportunity.data.file.split("*");
+      setFiles(...files, filess);
     } catch (e) {
       toast.error("Something Went wrong, try again.");
     }
@@ -83,6 +87,25 @@ const AgentOppDetails = () => {
               <p>
                 Stage : <span>{datas.stage}</span>
               </p>
+              <p>Documents :</p>
+              <div className="fileContainer">
+                {files?.map((e, i) => {
+                  if (i === 0) {
+                    return;
+                  } else {
+                    return (
+                      <a
+                        href={`${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/opp${datas.name}_${e}`}
+                        key={i}
+                        className="fileDownload"
+                      >
+                        <ArticleIcon className="fileIcon" />
+                        {e}
+                      </a>
+                    );
+                  }
+                })}
+              </div>
             </div>
           )}
         {datas.stage === "Assigned" && (

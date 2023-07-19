@@ -39,6 +39,7 @@ const Calendar = ({ opportunities }) => {
           backgroundColor={colors.primary[400]}
           p="15px"
           borderRadius="4px"
+          className="dzoviBox"
         >
           <Typography variant="h5">Opportunities</Typography>
           <List>

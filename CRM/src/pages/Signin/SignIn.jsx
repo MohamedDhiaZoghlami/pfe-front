@@ -69,6 +69,7 @@ export default function SignIn() {
       localStorage.setItem("refresh_token", JSON.stringify(refresh_token));
       setIsLoggedIn(true);
       setLoading(false);
+      window.location.refresh();
     } catch (e) {
       console.log("dzovi got errors :(");
       setErrorMsg("Please Verify your credentials");

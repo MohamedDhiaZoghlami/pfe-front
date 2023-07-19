@@ -113,7 +113,7 @@ const Users = () => {
   const fetchUsers = async (page) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACK_CALL}/user/allUsers?page=${page}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/user/allUsers?page=${page}`
       );
       console.log(response);
       setData(response.data.content);
@@ -125,7 +125,7 @@ const Users = () => {
   const deleteCustomer = async (id) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACK_CALL}/user/delete/${id}`
+        `${process.env.REACT_APP_CRM_API_BACKEND}/user/delete/${id}`
       );
 
       toast.success(response.data);

@@ -18,7 +18,7 @@ const CreateUser = ({ setModal }) => {
   }, []);
   const getAllRoles = async () => {
     const response = await axios.get(
-      `${process.env.REACT_APP_BACK_CALL}/user/allRoles`
+      `${process.env.REACT_APP_CRM_API_BACKEND}/user/allRoles`
     );
 
     const options = response.data.map((e) => {
@@ -40,13 +40,13 @@ const CreateUser = ({ setModal }) => {
     setLoading(true);
     try {
       const send = await axios.post(
-        `${process.env.REACT_APP_BACK_CALL}/user/create`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/user/create`,
         values
       );
       toast.success("User added successfully!!");
       console.log(role);
       const addRoleToUser = await axios.post(
-        `${process.env.REACT_APP_BACK_CALL}/user/role/addToUser`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/user/role/addToUser`,
         {
           username: values.username,
           roleName: role,

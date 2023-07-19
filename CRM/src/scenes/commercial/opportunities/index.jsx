@@ -38,11 +38,61 @@ const AgentOpportunities = () => {
       field: "value",
       headerName: "value",
       flex: 1,
+      renderCell: (opp) => {
+        console.log("dddd", opp);
+        return (
+          <div
+            className={
+              opp.row.value === "Not_assigned_yet"
+                ? "valueNot"
+                : opp.row.value === "Ignored"
+                ? "valueIgnored"
+                : opp.row.value === "Low"
+                ? "valueLow"
+                : opp.row.value === "Medium"
+                ? "valueMedium"
+                : opp.row.value === "High"
+                ? "valueHigh"
+                : ""
+            }
+          >
+            {opp.row.value}
+          </div>
+        );
+      },
     },
     {
       field: "stage",
       headerName: "stage",
       flex: 1,
+      renderCell: (opp) => {
+        console.log("dddd", opp);
+        return (
+          <div
+            className={
+              opp.row.stage === "New"
+                ? "stageNew"
+                : opp.row.stage === "Ignored"
+                ? "stageIgnored"
+                : opp.row.stage === "Deciding"
+                ? "stageDeciding"
+                : opp.row.stage === "Assigned"
+                ? "stageAssigned"
+                : opp.row.stage === "Working_on"
+                ? "stageWorkingOn"
+                : opp.row.stage === "Negotiation"
+                ? "stageNegotiation"
+                : opp.row.stage === "Closed_lost"
+                ? "stageClosedLost"
+                : opp.row.stage === "Closed_won"
+                ? "stageClosedWon"
+                : ""
+            }
+          >
+            {opp.row.stage}
+          </div>
+        );
+      },
     },
     {
       headerName: "Actions",

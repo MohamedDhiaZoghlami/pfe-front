@@ -151,3 +151,9 @@ input[type="file"] {
 .fileIcon {
   margin-right: 8px;
 }
+
+/*calendar*/
+.dzoviBox {
+  height: 550px !important;
+  overflow-y: scroll;
+}

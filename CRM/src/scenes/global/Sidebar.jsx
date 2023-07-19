@@ -176,8 +176,20 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            {roles.indexOf("ROLE_ADMIN") !== -1 && <p>admin</p>}
-            {roles.indexOf("ROLE_TECH") !== -1 && <p>tech</p>}
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Stats
+            </Typography>
+            <Item
+              title="Commercial Agents"
+              to="/line"
+              icon={<TimelineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}
