@@ -31,6 +31,8 @@ import AgentOpportunities from "./scenes/commercial/opportunities";
 import AgentOppDetails from "./scenes/commercial/opportunities/AgentOppDetails";
 import SecretaryAll from "./scenes/secretary/SecretaryAll";
 import SecretaryPrivateRoute from "./utils/SecretaryPrivateRoute";
+import MyProfile from "./scenes/users/MyProfile";
+import UpdateProfile from "./scenes/users/UpdateProfile";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -65,6 +67,9 @@ function App() {
             {/* Opportunities */}
             <Route path="opportunities" element={<Opportunities />} />
             <Route path="opportunities/:id" element={<OpportunityDetails />} />
+            <Route path="profile" element={<MyProfile />}>
+              <Route path="update" element={<UpdateProfile />} />
+            </Route>
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />
             <Route path="/bar" element={<Bar />} />

@@ -19,6 +19,7 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { useEffect } from "react";
+import Profile from "../../assets/profile.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -89,7 +90,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  Progress
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -105,7 +106,11 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user.png`}
+                  src={
+                    user.image
+                      ? `${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/profile${user.firstName}_${user.image}`
+                      : Profile
+                  }
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -119,7 +124,7 @@ const Sidebar = () => {
                   {userInfo.firstName} {userInfo.lastName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Intern
+                  {user.roles[0].name.split("_")[1]}
                 </Typography>
               </Box>
             </Box>
@@ -197,6 +202,13 @@ const Sidebar = () => {
             >
               Pages
             </Typography>
+            <Item
+              title="My Profile"
+              to="/profile"
+              icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Profile Form"
               to="/form"

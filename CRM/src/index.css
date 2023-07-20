@@ -157,3 +157,35 @@ input[type="file"] {
   height: 550px !important;
   overflow-y: scroll;
 }
+
+/*Profile Style*/
+.profile-wrapper {
+  padding: 50px;
+}
+.profile-content {
+  display: flex;
+  flex-direction: column;
+}
+.img-wrapper {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+.img-wrapper img {
+  width: 180px;
+  height: 180px;
+  object-fit: fill;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+.img-wrapper p {
+  font-size: 24px;
+  font-weight: 600;
+}
+.p-info {
+  font-size: 20px;
+  font-weight: 600;
+}
+.p-info span {
+  font-weight: 300;
+}
