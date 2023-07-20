@@ -148,6 +148,13 @@ const ComSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="My Profile"
+              to="profile"
+              icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
       </ProSidebar>

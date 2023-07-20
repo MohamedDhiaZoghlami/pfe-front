@@ -33,6 +33,7 @@ import SecretaryAll from "./scenes/secretary/SecretaryAll";
 import SecretaryPrivateRoute from "./utils/SecretaryPrivateRoute";
 import MyProfile from "./scenes/users/MyProfile";
 import UpdateProfile from "./scenes/users/UpdateProfile";
+import UserDetails from "./scenes/users/UserDetails";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -63,7 +64,7 @@ function App() {
             <Route path="contacts/update/:id" element={<UpdateContact />} />
             {/* Users  */}
             <Route path="users" element={<Users />} />
-            {/* <Route path="users/:id" element={<CustomerDetails />} /> */}
+            <Route path="users/:id" element={<UserDetails />} />
             {/* Opportunities */}
             <Route path="opportunities" element={<Opportunities />} />
             <Route path="opportunities/:id" element={<OpportunityDetails />} />
@@ -89,6 +90,9 @@ function App() {
           >
             <Route path="opportunities" element={<AgentOpportunities />} />
             <Route path="opportunities/:id" element={<AgentOppDetails />} />
+            <Route path="profile" element={<MyProfile />}>
+              <Route path="update" element={<UpdateProfile />} />
+            </Route>
           </Route>
           <Route
             path="/secretary"
@@ -109,6 +113,9 @@ function App() {
             {/* Opportunities */}
             <Route path="opportunities" element={<Opportunities />} />
             <Route path="opportunities/:id" element={<OpportunityDetails />} />
+            <Route path="profile" element={<MyProfile />}>
+              <Route path="update" element={<UpdateProfile />} />
+            </Route>
           </Route>
           <Route path="/login" element={<SignIn />} />
         </Routes>
