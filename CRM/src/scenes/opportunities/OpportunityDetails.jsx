@@ -298,7 +298,8 @@ const OpportunityDetails = () => {
           datas.customer.name &&
           datas.expected_close_date &&
           datas.last_updated_at &&
-          datas.created_at && (
+          datas.created_at &&
+          datas.agent && (
             <div className="opp-container">
               <p>
                 Name : <span>{datas.name}</span>
@@ -325,6 +326,11 @@ const OpportunityDetails = () => {
               <p>
                 Stage : <span>{datas.stage}</span>
               </p>
+              {datas.agent ? (
+                <p>
+                  Commercial Agent : <span>{datas.agent}</span>
+                </p>
+              ) : null}
               <p>
                 This was created by : <span>{datas.created_By}</span> at :{" "}
                 <span>{datas.created_at.split("T")[0]}</span>

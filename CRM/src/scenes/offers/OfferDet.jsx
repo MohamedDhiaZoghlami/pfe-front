@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import Header from "../../../components/Header";
+import Header from "../../components/Header";
 import "./pagination.scss";
-import CloseIcon from "@mui/icons-material/Close";
-import Select from "react-select";
-import { useContext } from "react";
-import AuthContext from "../../../context/AuthContext";
 import ArticleIcon from "@mui/icons-material/Article";
 
-const OfferDetails = () => {
+const OfferDet = () => {
   let { id } = useParams();
   const [datas, setDatas] = useState({});
   const [files, setFiles] = useState([]);
@@ -137,7 +133,11 @@ const OfferDetails = () => {
           datas.opportunity &&
           datas.name &&
           datas.description &&
-          datas.status && (
+          datas.status &&
+          datas.last_updated_By &&
+          datas.last_updated_at &&
+          datas.created_By &&
+          datas.created_at && (
             <div className="opp-container">
               <p>
                 Opportunity Name : <span>{datas.opportunity.name}</span>
@@ -181,15 +181,15 @@ const OfferDetails = () => {
                   <span>{datas.response_date.split("T")[0]}</span>
                 </p>
               ) : null}
-              {/* <p>
+              <p>
                 This was created by : <span>{datas.created_By}</span> at :{" "}
                 <span>{datas.created_at.split("T")[0]}</span>
-              </p> */}
-              {/* <p>
+              </p>
+              <p>
                 This was lastly updated by :{" "}
                 <span>{datas.last_updated_By}</span> at :{" "}
                 <span>{datas.last_updated_at.split("T")[0]}</span>
-              </p> */}
+              </p>
               <p>Documents :</p>
               <div className="fileContainer">
                 {files?.map((e, i) => {
@@ -236,4 +236,4 @@ const OfferDetails = () => {
   }
 };
 
-export default OfferDetails;
+export default OfferDet;

@@ -130,6 +130,7 @@ input[type="file"] {
 .fileContainer {
   display: flex;
   margin: 20px 0;
+  flex-wrap: wrap;
 }
 .fileDownload {
   padding: 10px;
@@ -188,4 +189,51 @@ input[type="file"] {
 }
 .p-info span {
   font-weight: 300;
+}
+
+/*Offer Det Btns*/
+.offerDetBtns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}
+.submitOffer {
+  font-size: 18px;
+    background-color: #faa43a;
+    cursor: pointer;
+    color: #fff;
+    padding: 8px;
+    width: 250px;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+}
+.respBtns {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.respOfferY {
+  font-size: 14px;
+  background-color: #60bd68;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px;
+  width: 180px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+}
+.respOfferN {
+  font-size: 14px;
+  background-color: #ff2018;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px;
+  width: 180px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
 }

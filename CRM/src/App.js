@@ -35,6 +35,9 @@ import MyProfile from "./scenes/users/MyProfile";
 import UpdateProfile from "./scenes/users/UpdateProfile";
 import UserDetails from "./scenes/users/UserDetails";
 import AgentOffers from "./scenes/commercial/offers";
+import OfferDetails from "./scenes/commercial/offers/OfferDetails";
+import Offers from "./scenes/offers";
+import OfferDet from "./scenes/offers/OfferDet";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -72,6 +75,9 @@ function App() {
             <Route path="profile" element={<MyProfile />}>
               <Route path="update" element={<UpdateProfile />} />
             </Route>
+            {/* Offers */}
+            <Route path="offers" element={<Offers />} />
+            <Route path="offers/:id" element={<OfferDet />} />
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />
             <Route path="/bar" element={<Bar />} />
@@ -92,7 +98,7 @@ function App() {
             <Route path="opportunities" element={<AgentOpportunities />} />
             <Route path="opportunities/:id" element={<AgentOppDetails />} />
             <Route path="offers" element={<AgentOffers />} />
-            <Route path="offers/:id" element={<AgentOffers />} />
+            <Route path="offers/:id" element={<OfferDetails />} />
             <Route path="profile" element={<MyProfile />}>
               <Route path="update" element={<UpdateProfile />} />
             </Route>

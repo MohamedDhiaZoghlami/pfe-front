@@ -54,7 +54,7 @@ const AgentOffers = () => {
               opp.row.status === "On_going"
                 ? "stageNew"
                 : opp.row.status === "Submitted"
-                ? "stageNegotiating"
+                ? "stageNegotiation"
                 : opp.row.status === "rejected"
                 ? "stageIgnored"
                 : opp.row.status === "accepted"
