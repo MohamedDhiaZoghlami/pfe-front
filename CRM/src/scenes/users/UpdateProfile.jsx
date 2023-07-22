@@ -144,7 +144,7 @@ const UpdateProfile = ({ user }) => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.adress}
-                name="address1"
+                name="adress"
                 error={!!touched.adress && !!errors.adress}
                 helperText={touched.adress && errors.adress}
                 sx={{ gridColumn: "span 4" }}

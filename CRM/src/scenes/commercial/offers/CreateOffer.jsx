@@ -4,27 +4,23 @@ import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import { toast } from "react-hot-toast";
-import AuthContext from "../../context/AuthContext";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Input } from "@mui/material";
+import AuthContext from "../../../context/AuthContext";
 import Select from "react-select";
 
-const CreateOpportunity = ({ setModal }) => {
+const CreateOffer = () => {
   const { user } = useContext(AuthContext);
   const [nbrFiles, setNbrFiles] = useState([]);
   const [fileNames, setFileNames] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [customerId, setCustomerId] = useState("");
-  const [customers, setCustomers] = useState([]);
+  const [opportunityId, setOpportunityId] = useState("");
+  const [opportunities, setOpportunities] = useState([]);
   const [date, setDate] = useState("");
   const [files, setFiles] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   useEffect(() => {
-    getAllCustomers();
+    getAllOpps();
   }, []);
   useEffect(() => {
     console.log(files);
@@ -37,21 +33,21 @@ const CreateOpportunity = ({ setModal }) => {
   const handleFileChange = (e) => {
     setFiles([...files, e.target.files]);
   };
-  const getAllCustomers = async () => {
+  const getAllOpps = async () => {
     const response = await axios.get(
-      `${process.env.REACT_APP_CRM_API_BACKEND}/customers/Once`
+      `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/agent/${user.username}`
     );
-
+    console.log(response.data);
     const options = response.data.map((e) => {
       return {
         value: e,
         label: e.name,
       };
     });
-    setCustomers([...options]);
+    setOpportunities([...options]);
   };
   function handleSelectedChoix(e) {
-    setCustomerId(e.value.id);
+    setOpportunityId(e.value.id);
     console.log(e.value.id);
     // handle other stuff like persisting to store etc
   }
@@ -62,7 +58,6 @@ const CreateOpportunity = ({ setModal }) => {
       ...values,
       created_By: user.username,
       last_updated_By: user.username,
-      expected_close_date: date,
     };
     try {
       for (let i = 0; i < files.length; i++) {
@@ -70,7 +65,7 @@ const CreateOpportunity = ({ setModal }) => {
         formData.append("file", files[i][0]);
         try {
           const response = await axios.put(
-            `${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/opp${values.name}_${files[i][0].name}`,
+            `${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/offer_${values.name}_${files[i][0].name}`,
             files[i][0],
             {
               headers: {
@@ -80,16 +75,16 @@ const CreateOpportunity = ({ setModal }) => {
           );
           console.log(response);
           setFileNames([...fileNames, `${files[i][0].name}`]);
-          values.file += `*${files[i][0].name}`;
+          values.files += `*${files[i][0].name}`;
         } catch (e) {
           console.log(e);
         }
       }
       const send = await axios.post(
-        `${process.env.REACT_APP_CRM_API_BACKEND}/opportunity/create/${customerId}`,
+        `${process.env.REACT_APP_CRM_API_BACKEND}/offer/create/${opportunityId}`,
         values
       );
-      toast.success("Opportunity addes successfully!!");
+      toast.success("Offer added successfully!!");
       console.log(send);
     } catch (e) {
       console.log(e);
@@ -102,7 +97,7 @@ const CreateOpportunity = ({ setModal }) => {
     <div className="customer_wrapper">
       <div className="customer_content">
         <Box m="20px">
-          <Header title="Create a new opportunity" subtitle="" />
+          <Header title="Create a new Offer" subtitle="" />
 
           {loading ? (
             <p>loading...</p>
@@ -131,56 +126,16 @@ const CreateOpportunity = ({ setModal }) => {
                       },
                     }}
                   >
-                    <TextField
-                      fullWidth
-                      variant="filled"
-                      type="text"
-                      label="Name"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.name}
-                      name="name"
-                      error={!!touched.name && !!errors.name}
-                      helperText={touched.name && errors.name}
-                      sx={{ gridColumn: "span 2" }}
-                    />
-                    <TextField
-                      fullWidth
-                      variant="filled"
-                      type="text"
-                      label="from where"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.phone}
-                      name="fromWhere"
-                      error={!!touched.fromWhere && !!errors.fromWhere}
-                      helperText={touched.fromWhere && errors.fromWhere}
-                      sx={{ gridColumn: "span 2" }}
-                    />
-                    <TextField
-                      fullWidth
-                      variant="filled"
-                      type="text"
-                      label="Description"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.description}
-                      name="description"
-                      error={!!touched.description && !!errors.description}
-                      helperText={touched.description && errors.description}
-                      sx={{ gridColumn: "span 4" }}
-                    />
-                    <div className="b">
+                    <div className="b" sx={{ gridColumn: "span 4" }}>
                       <p
                         styles={{
                           marginRight: "-200px",
                         }}
                       >
-                        Customer
+                        Please Select The opportunity Your making an offer for :
                       </p>
                       <Select
-                        options={customers}
-                        sx={{ gridColumn: "span 2" }}
+                        options={opportunities}
                         onChange={handleSelectedChoix}
                         styles={{
                           control: (styles) => ({
@@ -210,16 +165,32 @@ const CreateOpportunity = ({ setModal }) => {
                         }}
                       />
                     </div>
-                  </Box>
-                  <Box>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <p>Expcted Close Date :</p>
-                      <DatePicker
-                        label="Expected close date"
-                        //   value={value}
-                        onChange={(newValue) => setDate(newValue)}
-                      />
-                    </LocalizationProvider>
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      type="text"
+                      label="Name"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.name}
+                      name="name"
+                      error={!!touched.name && !!errors.name}
+                      helperText={touched.name && errors.name}
+                      sx={{ gridColumn: "span 4" }}
+                    />
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      type="text"
+                      label="Description"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.description}
+                      name="description"
+                      error={!!touched.description && !!errors.description}
+                      helperText={touched.description && errors.description}
+                      sx={{ gridColumn: "span 4" }}
+                    />
                   </Box>
                   <Box className="files-upp">
                     {nbrFiles?.map((e, index) => (
@@ -257,22 +228,16 @@ const phoneRegExp =
 const checkoutSchema = yup.object().shape({
   name: yup.string().required("required"),
   description: yup.string().required("required"),
-  fromWhere: yup.string().required("required"),
 });
 const initialValues = {
   name: "",
   description: "",
-  file: "",
-  stage: "New",
-  expected_close_date: "",
-  fromWhere: "internal",
-  value: "Not_assigned_yet",
-  decision: "Not_assigned_yet",
-  agent: "",
+  files: "",
+  status: "On_going",
   created_By: "dzovi",
   last_updated_By: "dzovi",
   created_at: Date.now(),
   last_updated_at: Date.now(),
 };
 
-export default CreateOpportunity;
+export default CreateOffer;
