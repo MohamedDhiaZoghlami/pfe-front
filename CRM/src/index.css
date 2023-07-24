@@ -237,3 +237,25 @@ input[type="file"] {
   margin: 5px;
   text-align: center;
 }
+.filledP {
+  font-size: 18px;
+  font-weight: 600;
+}
+.relV {
+  position: relative;
+}
+.DownBtn {
+  position: absolute;
+  top: 100px;
+  right: 100px;
+}
+.DownBtn a {
+    margin: 5px;
+      cursor: pointer;
+      border: 1px solid #b276b2;
+      padding: 8px;
+      border-radius: 5px;
+      text-decoration: none;
+      background-color: #b276b2;
+      color: #fff;
+}

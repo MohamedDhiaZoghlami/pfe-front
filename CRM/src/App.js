@@ -38,6 +38,8 @@ import AgentOffers from "./scenes/commercial/offers";
 import OfferDetails from "./scenes/commercial/offers/OfferDetails";
 import Offers from "./scenes/offers";
 import OfferDet from "./scenes/offers/OfferDet";
+import Contracts from "./scenes/contracts";
+import Contract from "./scenes/contracts/Contract";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -78,6 +80,9 @@ function App() {
             {/* Offers */}
             <Route path="offers" element={<Offers />} />
             <Route path="offers/:id" element={<OfferDet />} />
+            {/* Contracts */}
+            <Route path="contracts" element={<Contracts />} />
+            <Route path="contracts/:id" element={<Contract />} />
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/form" element={<Form />} />
             <Route path="/bar" element={<Bar />} />

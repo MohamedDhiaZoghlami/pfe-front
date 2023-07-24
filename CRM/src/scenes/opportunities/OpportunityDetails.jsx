@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import Header from "../../components/Header";
@@ -10,10 +10,12 @@ import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import ArticleIcon from "@mui/icons-material/Article";
+import CreateContract from "../contracts/CreateContract";
 
 const OpportunityDetails = () => {
   const { roles } = useContext(AuthContext);
   let { id } = useParams();
+  const navigate = useNavigate();
   const [datas, setDatas] = useState({});
   const [value, setValue] = useState("");
   const [files, setFiles] = useState([]);
@@ -23,6 +25,7 @@ const OpportunityDetails = () => {
   const [showParticipate, setShowParticipate] = useState(false);
   const [commercials, setCommercials] = useState([]);
   const [agent, setAgent] = useState("");
+  const [showContract, setShowContract] = useState(false);
   const options = [
     {
       value: "Low",
@@ -153,6 +156,9 @@ const OpportunityDetails = () => {
     setLoading(false);
     setAssign(false);
   };
+  if (showContract) {
+    return <CreateContract Opp={datas} Customer={datas.customer} />;
+  }
   if (loading) {
     return <p>loading...</p>;
   } else {
@@ -370,6 +376,17 @@ const OpportunityDetails = () => {
                 </div>
                 <div className="yes" onClick={() => setShowParticipate(true)}>
                   Participate
+                </div>
+              </div>
+            )}
+          </>
+        )}
+        {roles[0] === "ROLE_ADMIN" && (
+          <>
+            {datas.stage === "Closed_won" && (
+              <div className="btns-opp">
+                <div className="contr" onClick={() => setShowContract(true)}>
+                  Create Contract
                 </div>
               </div>
             )}
