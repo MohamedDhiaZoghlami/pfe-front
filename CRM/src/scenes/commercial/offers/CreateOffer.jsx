@@ -65,7 +65,7 @@ const CreateOffer = () => {
         formData.append("file", files[i][0]);
         try {
           const response = await axios.put(
-            `${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/offer_${values.name}_${files[i][0].name}`,
+            `${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/offer${values.name}_${files[i][0].name}`,
             files[i][0],
             {
               headers: {
@@ -209,7 +209,7 @@ const CreateOffer = () => {
                   </Box>
                   <Box display="flex" justifyContent="end" mt="20px">
                     <Button type="submit" color="secondary" variant="contained">
-                      Create New Opportunity
+                      Create New Offer
                     </Button>
                   </Box>
                 </form>

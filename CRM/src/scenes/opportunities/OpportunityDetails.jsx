@@ -304,8 +304,7 @@ const OpportunityDetails = () => {
           datas.customer.name &&
           datas.expected_close_date &&
           datas.last_updated_at &&
-          datas.created_at &&
-          datas.agent && (
+          datas.created_at && (
             <div className="opp-container">
               <p>
                 Name : <span>{datas.name}</span>

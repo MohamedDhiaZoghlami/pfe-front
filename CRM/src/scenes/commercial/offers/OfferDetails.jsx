@@ -198,7 +198,7 @@ const OfferDetails = () => {
                   } else {
                     return (
                       <a
-                        href={`${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/opp${datas.name}_${e}`}
+                        href={`${process.env.REACT_APP_CRM_ASSETS_DISTRIBUTION_DOMAIN}/offer_${datas.name}_${e}`}
                         key={i}
                         className="fileDownload"
                       >
